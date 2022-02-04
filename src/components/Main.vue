@@ -2,15 +2,13 @@
   <div>
     <input type="text" v-model="inputCerca">
     <button @click="cerca">Cerca</button>
-    <ul>
-      <li 
+    <ul
         v-for="(element, index) in arrayFilms" 
         :key="index">
-        <p>{{element.title}}</p>
-        <p>{{element.original_title}}</p>
-        <p>{{element.original_language}}</p>
-        <p>{{element.vote_average}}</p>
-      </li>
+        <li>{{element.title}}</li>
+        <li>{{element.original_title}}</li>
+        <li><img :src="require(`../assets/imgFlag/${getFlag(element.original_language)}.png`)" alt=""></li>
+        <li>{{element.vote_average}}</li>
     </ul>
   </div>
 </template>
@@ -25,7 +23,15 @@ export default {
           arrayFilms: []
         }
     },
-    methods: {
+    methods:{
+      getFlag: function(language){
+        let urlFlag = "jolly";
+        if(['it', 'en'].includes(language)){
+          urlFlag = language;
+        }
+        return urlFlag;
+      },
+
       cerca: function(){
         axios
         .get('https://api.themoviedb.org/3/search/movie', 
@@ -47,6 +53,13 @@ export default {
 }
 </script>
 
-<style>
+<style lang='scss' scoped>
+  ul{
+    padding: 0;
+    border-bottom: 1px solid black;
+  }
 
+  li{
+    list-style: none;
+  }
 </style>
