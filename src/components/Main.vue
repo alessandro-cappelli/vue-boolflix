@@ -1,6 +1,6 @@
 <template>
   <div>
-    <input type="text">
+    <input type="text" v-model="inputCerca">
     <button @click="cerca">Cerca</button>
     <ul>
       <li 
