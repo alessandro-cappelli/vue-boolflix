@@ -3,7 +3,7 @@
     <input type="text" v-model="inputCerca">
     <button @click="cerca">Cerca</button>
     <ul
-        v-for="(element, index) in arrayFilms" 
+        v-for="(element, index) in arrayFilmsSerie" 
         :key="index">
         <li>{{element.title}}</li>
         <li>{{element.original_title}}</li>
@@ -20,8 +20,14 @@ export default {
     data() {
         return{
           inputCerca: "",
-          arrayFilms: []
+          arrayFilms: [],
+          arraySerie: [],
         }
+    },
+    computed: {
+      arrayFilmsSerie(){
+        return [...this.arrayFilms, ...this.arraySerie];
+      }
     },
     methods:{
       getFlag: function(language){
@@ -33,23 +39,48 @@ export default {
       },
 
       cerca: function(){
+          this.cercaFilm();
+          this.cercaSerie();
+      },
+
+      cercaFilm: function(){
         axios
-        .get('https://api.themoviedb.org/3/search/movie', 
-        {
-          params: {
-            api_key: 'dcad4b553c14bd5d5552daeaa7f4d1f0',
-            query: this.inputCerca
-          }
-        })
-        .then( (response) => {
-          this.arrayFilms = response.data.results;
-          console.log('Risposta GET films')
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-          }
-        }
+          .get('https://api.themoviedb.org/3/search/movie', 
+          {
+            params: {
+              api_key: 'dcad4b553c14bd5d5552daeaa7f4d1f0',
+              query: this.inputCerca
+            }
+          })
+          .then( (response) => {
+            this.arrayFilms = response.data.results;
+            console.log('Risposta GET films')
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      },
+      
+      cercaSerie: function(){
+        axios
+          .get('https://api.themoviedb.org/3/search/tv?', 
+          {
+            params: {
+              api_key: 'dcad4b553c14bd5d5552daeaa7f4d1f0',
+              query: this.inputCerca
+            }
+          })
+          .then( (response) => {
+            this.arraySerie = response.data.results;
+            console.log('Risposta GET films')
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      }
+    }
+
+        
 }
 </script>
 
