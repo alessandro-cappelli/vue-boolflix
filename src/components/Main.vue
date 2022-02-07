@@ -6,10 +6,11 @@
         v-for="(element, index) in arrayFilmsSerie" 
         :key="index">
         <li><img class="poster" :src="`https://image.tmdb.org/t/p/original/`+element.poster_path"></li>
-        <li>{{element.title}}</li>
-        <li>{{element.original_title}}</li>
+        <li><span>Titolo:</span> {{element.title}}</li>
+        <li><span>Titolo originale:</span> {{element.original_title}}</li>
         <li><img :src="require(`../assets/imgFlag/${getFlag(element.original_language)}.png`)" alt=""></li>
-        <li>{{element.vote_average}}</li>
+        <li><span>Voto:</span> {{element.vote_average}}</li>
+        <!-- <li v-for="(elem, index) in starsApp" :key="index">*</li> -->
     </ul>
   </div>
 </template>
@@ -23,6 +24,7 @@ export default {
           inputCerca: "",
           arrayFilms: [],
           arraySerie: [],
+          // starsApp: null,
         }
     },
     computed: {
@@ -31,6 +33,9 @@ export default {
       }
     },
     methods:{
+      // getStar: function(voto){
+      //   this.starsApp = Math.ceil(voto/2);
+      // },
       getFlag: function(language){
         let urlFlag = "jolly";
         if(['it', 'en'].includes(language)){
@@ -88,7 +93,9 @@ export default {
 <style lang='scss' scoped>
   ul{
     padding: 0;
-    border-bottom: 1px solid black;
+    text-align: center;
+    background-color: #a2acb5;
+    border-radius: 15px;
   }
 
   li{
@@ -97,5 +104,9 @@ export default {
 
   .poster{
     width: 170px;
+  }
+
+  span{
+    font-weight: bold;
   }
 </style>
