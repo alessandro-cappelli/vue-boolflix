@@ -5,6 +5,7 @@
     <ul
         v-for="(element, index) in arrayFilmsSerie" 
         :key="index">
+        <li><img class="poster" :src="`https://image.tmdb.org/t/p/original/`+element.poster_path"></li>
         <li>{{element.title}}</li>
         <li>{{element.original_title}}</li>
         <li><img :src="require(`../assets/imgFlag/${getFlag(element.original_language)}.png`)" alt=""></li>
@@ -92,5 +93,9 @@ export default {
 
   li{
     list-style: none;
+  }
+
+  .poster{
+    width: 170px;
   }
 </style>
